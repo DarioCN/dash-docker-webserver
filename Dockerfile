@@ -40,6 +40,10 @@ COPY supervisor.conf /etc/supervisor/conf.d/supervisord.conf
 COPY stop-supervisor.sh /etc/supervisor/stop-supervisor.sh
 RUN chmod +x /etc/supervisor/stop-supervisor.sh
 
+# Instalar Dash
+RUN pip install --no-cache-dir --upgrade dash \
+    && find . | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf
+
 # Establecer entrypoint
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
