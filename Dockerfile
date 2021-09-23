@@ -39,3 +39,12 @@ RUN apt-get update \
 COPY supervisor.conf /etc/supervisor/conf.d/supervisord.conf
 COPY stop-supervisor.sh /etc/supervisor/stop-supervisor.sh
 RUN chmod +x /etc/supervisor/stop-supervisor.sh
+
+# Establecer entrypoint
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT [ "/entrypoint.sh" ]
+
+EXPOSE 8050
+
+CMD ["/usr/bin/supervisord"]
