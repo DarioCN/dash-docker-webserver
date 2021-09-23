@@ -7,6 +7,7 @@ import pandas_datareader.data as web
 from datetime import date
 
 app = dash.Dash()
+server = app.server
 
 nsdq = pd.read_csv('/app/NASDAQcompanylist.csv')
 nsdq.set_index('Symbol', inplace=True)
