@@ -42,7 +42,7 @@ RUN chmod +x /etc/supervisor/stop-supervisor.sh
 
 # Instalar Dash
 RUN pip install --no-cache-dir --upgrade dash \
-    && pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U \
+    && pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U || true \
     && find . | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf
 
 # Establecer entrypoint
