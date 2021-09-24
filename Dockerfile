@@ -1,13 +1,9 @@
 FROM python:slim-buster
 
 # Actualizar Debian
-ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get update \
-    && apt-get -y upgrade \
-    && apt-get -y autoremove \
-    && apt-get autoclean \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+COPY debian.sh /
+RUN bash /debian.sh \
+    && rm /debian.sh
 
 # Instalar NGINX
 COPY nginx.sh /
