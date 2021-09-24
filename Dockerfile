@@ -26,15 +26,15 @@ COPY stop-supervisor.sh /etc/supervisor/stop-supervisor.sh
 RUN chmod +x /etc/supervisor/stop-supervisor.sh
 
 # Instalar Dash
-RUN pip install --no-cache-dir --upgrade dash \
-    && pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U || true \
-    && find . | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf
+COPY dash.sh /
+RUN bash /dash.sh \
+    && rm /dash.sh
 
 # Establecer entrypoint
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT [ "/entrypoint.sh" ]
 
+# Exponer puerto y lanzar servidor
 EXPOSE 8050
-
 CMD ["/usr/bin/supervisord"]
