@@ -1,4 +1,4 @@
-FROM dash-ws:nginx
+FROM dariocn/dash-ws:nginx
 
 # Install required Python packages
 COPY requirements.txt /
