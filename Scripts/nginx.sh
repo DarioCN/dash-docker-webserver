@@ -2,7 +2,7 @@
 
 NGINX_VERSION=1.21.3
 NJS_VERSION=0.6.2
-PKG_RELEASE=1~buster
+PKG_RELEASE=1~bullseye
 
 set -x \
 && addgroup --system --gid 101 nginx \
@@ -33,11 +33,11 @@ apt-get remove --purge --auto-remove -y gnupg1 && rm -rf /var/lib/apt/lists/* \
 " \
 && case "$dpkgArch" in \
     amd64|i386|arm64) \
-        echo "deb https://nginx.org/packages/mainline/debian/ buster nginx" >> /etc/apt/sources.list.d/nginx.list \
+        echo "deb https://nginx.org/packages/mainline/debian/ bullseye nginx" >> /etc/apt/sources.list.d/nginx.list \
         && apt-get update \
         ;; \
     *) \
-        echo "deb-src https://nginx.org/packages/mainline/debian/ buster nginx" >> /etc/apt/sources.list.d/nginx.list \
+        echo "deb-src https://nginx.org/packages/mainline/debian/ bullseye nginx" >> /etc/apt/sources.list.d/nginx.list \
         \
         && tempDir="$(mktemp -d)" \
         && chmod 777 "$tempDir" \
