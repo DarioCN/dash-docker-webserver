@@ -18,13 +18,9 @@ RUN bash /uwsgi.sh \
 COPY uwsgi.ini /etc/uwsgi/
 
 # Instalar Supervisor
-RUN apt-get update \
-    && apt-get install --no-install-recommends --no-install-suggests -y \
-    supervisor \
-    && apt-get -y autoremove \
-    && apt-get autoclean \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+COPY supervisor.sh /
+RUN bash /supervisor.sh \
+    && rm /supervisor.sh
 COPY supervisor.conf /etc/supervisor/conf.d/supervisord.conf
 COPY stop-supervisor.sh /etc/supervisor/stop-supervisor.sh
 RUN chmod +x /etc/supervisor/stop-supervisor.sh
