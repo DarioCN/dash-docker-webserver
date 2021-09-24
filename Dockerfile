@@ -12,16 +12,9 @@ RUN bash /nginx.sh \
     && rm /etc/nginx/conf.d/default.conf
 
 # Instalar uWSGI
-RUN apt-get update \
-    && apt-get install --no-install-recommends --no-install-suggests -y \
-    build-essential \
-    && pip install --no-cache-dir --upgrade uwsgi \
-    && find . | grep -E "(__pycache__|\.pyc|\.pyo$)" | xargs rm -rf \
-    && apt-get remove --purge --auto-remove -y \
-    build-essential \
-    && apt-get autoclean \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+COPY uwsgi.sh /
+RUN bash /uwsgi.sh \
+    && rm /uwsgi.sh
 COPY uwsgi.ini /etc/uwsgi/
 
 # Instalar Supervisor
