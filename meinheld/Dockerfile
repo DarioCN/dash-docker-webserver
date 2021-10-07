@@ -1,5 +1,5 @@
 # FROM python:slim-buster
-FROM python:slim
+FROM python:3.9-slim
 
 # Actualizar Debian
 COPY Scripts/debian.sh /
@@ -21,3 +21,12 @@ COPY Configs/gunicorn.py /gunicorn.py
 COPY Scripts/dash.sh /
 RUN bash /dash.sh \
     && rm /dash.sh
+
+# Establecer entrypoint
+COPY Scripts/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+ENTRYPOINT [ "/entrypoint.sh" ]
+
+# Exponer puerto y lanzar servidor
+EXPOSE 8050
+CMD ["gunicorn -k egg:meinheld#gunicorn_worker -c "$GUNICORN_CONF" "$APP_MODULE""]
